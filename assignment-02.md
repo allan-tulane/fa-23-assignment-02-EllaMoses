@@ -1,6 +1,6 @@
 # CMPS 2200 Assignment 2
 
-**Name:**_________________________
+**Name:** Ella Moses
 
 In this assignment we'll work on applying the methods we've learned to analyze recurrences, and also see their behavior
 in practice. As with previous
@@ -11,36 +11,27 @@ and push to your github repository.
 
 
 1. Derive asymptotic upper bounds of work for each recurrence below.
-  * $W(n)=2W(n/3)+1$
-.  
-.  
-.  
-.  
-.  
+  * $W(n)=2W(n/3)+1$  
+
+    The cost of the root is 1. The cost of level 1 is $2*1=2$. The cost of level 2 is $4*1=4$. The cost is geometrically increasing by a factor of 2 so the tree is leaf dominated. This means that $W(n) = O(n^{log_3(2)})$
+
   * $W(n)=5W(n/4)+n$
-.  
-.  
-.  
-.  
-.  
+
+     The cost of the root is n. The cost of level 1 is $5*(n/4)=(5/4)n$. The cost of level 2 is $25*(n/16)=(25/16)n$. The cost is geometrically increasing by a factor of $(5/4)$ so the tree is is leaf dominated. This means that $W(n) = O(n^{log_4(5)})$
+
+
   * $W(n)=7W(n/7)+n$
-.  
-.  
-.  
-.  
-.  
+
+    The cost of the root is n. The cost of level 1 is $7*(n/7)=n$. The cost of level 2 is $49*(n/49)= n$. The cost is constant so the tree is balanced. This means that $W(n)=O(nlogn)$. 
+
   * $W(n)=9W(n/3)+n^2$
-.  
-.  
-.  
-.  
-.  
+
+    The cost of the root is $n^2$. The cost of level 1 is $9*(n/3)^2=n^2$. The cost of level 2 is $81*(n/9)^2= n^2$. The cost is constant so the tree is balanced. This means that $W(n)=O(n^2logn)$. 
+
   * $W(n)=8W(n/2)+n^3$
-.  
-.  
-.  
-.  
-.  
+
+    The cost of the root is $n^3$. The cost of level 1 is $8*(n/2)^3=n^3$. The cost of level 2 is $64*(n/4)^3= n^3$. The cost is constant so the tree is balanced. This means that $W(n)=O(n^3logn)$.
+
   * $W(n)=49W(n/25)+n^{3/2}\log n$
 .  
 .  
@@ -48,19 +39,16 @@ and push to your github repository.
 .  
 .  
   * $W(n)=W(n-1)+2$
-.  
-.  
-.  
-.  
-.  
+
+    The cost of the root is 2. The cost of level 1 is 2. The cost of level 2 is 2. The cost is constant so the tree is balanced. There are n levels so $W(n)=O(n)$.
+
   * $W(n)= W(n-1)+n^c$, with $c\geq 1$
-.  
-.  
-.  
-.  
-.  
+
+    The cost of the root is $n^c$. The cost of the level 1 is $(n -1) ^c$. The cost of level 2 is $(n -2) ^c$. 
+
   * $W(n)=W(\sqrt{n})+1$
 
+    The cost of the root is 1. The cost of the level 1 is 1. The cost of level 2 is 1. The cost is constant so the tree is balanced. There are 
 
 2. Suppose that for a given task you are choosing between the following three algorithms:
 
@@ -79,6 +67,14 @@ and push to your github repository.
 
     What are the asymptotic running times of each of these algorithms?
     Which algorithm would you choose?
+
+    Algorithm A can be written as $W(n)=5W(n/2)+n$. The cost of the root is n. The cost of  level 1 is $5*(n/2)=(5/2)n$. The cost of level 2 is $25*(n/4)=(25/4)n$. The cost is geometrically increasing by a factor of $(5/2)$ so the tree is is leaf dominated. This means that $W(n) = O(n^{log_2(5)})$ 
+
+    Algorithm B can be written as $W(n)=2W(n-1)+1$. The cost of the root is 1. The cost of  level 1 is 2. The cost of level 2 is 4. The cost is geometrically increasing by a factor of 2 so the tree is is leaf dominated.
+
+    Algorithm C can be written as $W(n)=9W(n/3)+n^2$. The cost of the root is $n^2$. The cost of level 1 is $9*(n/3)^2=n^2$. The cost of level 2 is $81*(n/9)^2= n^2$. The cost is constant so the tree is balanced. This means that $W(n)=O(n^2logn)$. 
+
+  
 
 
 3. Now that you have some practice solving recurrences, let's work on

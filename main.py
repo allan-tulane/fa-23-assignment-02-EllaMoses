@@ -44,12 +44,37 @@ def pad(x,y):
     return x,y
 
 
-
+# Using equations 7 and 8 in the slides we see that (xl+xr) * (yl+yr) = (xl*yl) + (xl*yr) + (xr*yl) + (xr*yr) and (xl*yr) + (xr*yl) = (xl+xr) * (yl+yr) - (xl*yl) - (xr*yr)
+# this means (xl+xr) * (yl+yr) = (xl*yl) + (xl+xr) * (yl+yr) - (xl*yl) - (xr*yr) + (xr*yr), this way so we only use 3 multiplications instead of 4 like we did in recitation 3
 def subquadratic_multiply(x, y):
-    ### TODO
-    pass
-    ###
+    #base cases, if either x or y <= 1, just return their product
+    if ((x.decimal_val <= 1) or (y.decimal_val  <= 1)):
+        return BinaryNumber(x.decimal_val*y.decimal_val)
+    #recursive case
+    else: 
+        #obtain xvec and yvec, the binary_vec values of x and y
+        xvec = x.binary_vec
+        yvec = y.binary_vec
+        #pad xvec and yec so they are the same length and update the variables
+        xvec = pad(xvec, yvec)[0]
+        yvec = pad(xvec, yvec)[1]
+        #split xvec and yvec into two halves
+        x_left = split_number(xvec)[0]
+        x_right = split_number(xvec)[1]
+        y_left = split_number(yvec)[0]
+        y_right = split_number(yvec)[1]
+        '''
+        I will now find the three products in the given formula
+        I then plug these values into the formula.
+        the formula has three terms the first term needs to be shifted 2^n and the second term needs to be shifted 2^n/2
+        '''
+        first_product = subquadratic_multiply(x_left, y_left)
+        second_product = subquadratic_multiply(x_right, y_right)
+        third_product = subquadratic_multiply(BinaryNumber(x_left.decimal_val + x_right.decimal_val), BinaryNumber(y_left.decimal_val + y_right.decimal_val))
+        second_term = BinaryNumber(third_product.decimal_val - first_product.decimal_val - second_product.decimal_val)
 
+        return BinaryNumber(bit_shift(first_product, len(xvec)).decimal_val + bit_shift(second_term, len(xvec)//2).decimal_val + second_product.decimal_val)
+    
 
 
 def time_multiply(x, y, f):
