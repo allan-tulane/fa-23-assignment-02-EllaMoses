@@ -22,33 +22,31 @@ and push to your github repository.
 
   * $W(n)=7W(n/7)+n$
 
-    The cost of the root is n. The cost of level 1 is $7*(n/7)=n$. The cost of level 2 is $49*(n/49)= n$. The cost is constant so the tree is balanced. This means that $W(n)=O(nlogn)$. 
+    The cost of the root is n. The cost of level 1 is $7*(n/7)=n$. The cost of level 2 is $49*(n/49)= n$. The cost is constant so the tree is balanced with logn levels. This means that $W(n)=O(nlogn)$. 
 
   * $W(n)=9W(n/3)+n^2$
 
-    The cost of the root is $n^2$. The cost of level 1 is $9*(n/3)^2=n^2$. The cost of level 2 is $81*(n/9)^2= n^2$. The cost is constant so the tree is balanced. This means that $W(n)=O(n^2logn)$. 
+    The cost of the root is $n^2$. The cost of level 1 is $9*(n/3)^2=n^2$. The cost of level 2 is $81*(n/9)^2= n^2$. The cost is constant so the tree is balanced with logn levels. This means that $W(n)=O(n^2logn)$. 
 
   * $W(n)=8W(n/2)+n^3$
 
-    The cost of the root is $n^3$. The cost of level 1 is $8*(n/2)^3=n^3$. The cost of level 2 is $64*(n/4)^3= n^3$. The cost is constant so the tree is balanced. This means that $W(n)=O(n^3logn)$.
+    The cost of the root is $n^3$. The cost of level 1 is $8*(n/2)^3=n^3$. The cost of level 2 is $64*(n/4)^3= n^3$. The cost is constant so the tree is balanced with logn levels. This means that $W(n)=O(n^3logn)$.
 
   * $W(n)=49W(n/25)+n^{3/2}\log n$
-.  
-.  
-.  
-.  
-.  
+
+    The cost at the root is $n^{3/2}\log n$. The cost at level 1 is $49(n/25)^{3/2}\log (n/25)$. The cost at level 2 is $2401(n/625)^{3/2}\log (n/625)$. This is root domianted so W(n) = $O(n^{3/2}\log n)$. 
+
   * $W(n)=W(n-1)+2$
 
-    The cost of the root is 2. The cost of level 1 is 2. The cost of level 2 is 2. The cost is constant so the tree is balanced. There are n levels so $W(n)=O(n)$.
+    The cost of the root is 2. The cost of level 1 is 2. The cost of level 2 is 2. The cost is constant so the tree is balanced. There are n levels with a constant cost so $W(n)=O(n)$.
 
   * $W(n)= W(n-1)+n^c$, with $c\geq 1$
 
-    The cost of the root is $n^c$. The cost of the level 1 is $(n -1) ^c$. The cost of level 2 is $(n -2) ^c$. 
+    The cost of the root is $n^c$. The cost of the level 1 is $(n -1) ^c$. The cost of level 2 is $(n -2) ^c$. This is root dominated so the $W(n)=O(n^c)$.
 
   * $W(n)=W(\sqrt{n})+1$
 
-    The cost of the root is 1. The cost of the level 1 is 1. The cost of level 2 is 1. The cost is constant so the tree is balanced. There are 
+    The cost of the root is 1. The cost of the level 1 is 1. The cost of level 2 is 1. The cost is constant so the tree is balanced. There are log(log(n)) levels at a constant cost so $W(n)=O(log(log(n)))$.
 
 2. Suppose that for a given task you are choosing between the following three algorithms:
 
@@ -70,11 +68,11 @@ and push to your github repository.
 
     Algorithm A can be written as $W(n)=5W(n/2)+n$. The cost of the root is n. The cost of  level 1 is $5*(n/2)=(5/2)n$. The cost of level 2 is $25*(n/4)=(25/4)n$. The cost is geometrically increasing by a factor of $(5/2)$ so the tree is is leaf dominated. This means that $W(n) = O(n^{log_2(5)})$ 
 
-    Algorithm B can be written as $W(n)=2W(n-1)+1$. The cost of the root is 1. The cost of  level 1 is 2. The cost of level 2 is 4. The cost is geometrically increasing by a factor of 2 so the tree is is leaf dominated.
+    Algorithm B can be written as $W(n)=2W(n-1)+1$. The cost of the root is 1. The cost of  level 1 is 2. The cost of level 2 is 4. The cost is geometrically increasing by a factor of 2 so the tree is is leaf dominated. There are 2n leaves so $W(n)=O(n)$. 
 
     Algorithm C can be written as $W(n)=9W(n/3)+n^2$. The cost of the root is $n^2$. The cost of level 1 is $9*(n/3)^2=n^2$. The cost of level 2 is $81*(n/9)^2= n^2$. The cost is constant so the tree is balanced. This means that $W(n)=O(n^2logn)$. 
 
-  
+    O(n) is faster than the other two so I would choose algorithm B since it is the most efficient. 
 
 
 3. Now that you have some practice solving recurrences, let's work on
@@ -90,6 +88,16 @@ and push to your github repository.
   variety of inputs in `test_main.py` to test whether your code scales in the manner
   described by the asymptotic runtime. Please refer to Recitation 3 for some basic implementations, and Eqs (7) and (8) in the slides https://github.com/allan-tulane/cmps2200-slides/blob/main/module-02-recurrences/recurrences-integer-multiplication.ipynb
  
+ 
+    Using the time_multiply function I found the following times for multiplying different values n by 2. This algorithm is subquadratic and the work of this algorithm is $W(n)=3W(n/2)+n$. This is leaf dominated so $W(n)=n^{log_2(3)}$. The values below approximately follow this time complexity.
+
+    n = 1: time = 0.005245208740234375   
+    n = 10: time = 0.10275840759277344  
+    n = 100: time = 0.11396408081054688  
+    n = 1000: time = 0.23508071899414062  
+    n = 10000: time = 0.2579689025878906
+
+
  
 
 

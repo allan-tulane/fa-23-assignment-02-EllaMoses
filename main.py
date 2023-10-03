@@ -43,10 +43,14 @@ def pad(x,y):
         y = ['0'] + y
     return x,y
 
+def subquadratic_multiply(x, y):
+    # this just converts the result from a BinaryNumber to a regular int
+    return _subquadratic_multiply(x,y).decimal_val
+
 
 # Using equations 7 and 8 in the slides we see that (xl+xr) * (yl+yr) = (xl*yl) + (xl*yr) + (xr*yl) + (xr*yr) and (xl*yr) + (xr*yl) = (xl+xr) * (yl+yr) - (xl*yl) - (xr*yr)
 # this means (xl+xr) * (yl+yr) = (xl*yl) + (xl+xr) * (yl+yr) - (xl*yl) - (xr*yr) + (xr*yr), this way so we only use 3 multiplications instead of 4 like we did in recitation 3
-def subquadratic_multiply(x, y):
+def _subquadratic_multiply(x, y):
     #base cases, if either x or y <= 1, just return their product
     if ((x.decimal_val <= 1) or (y.decimal_val  <= 1)):
         return BinaryNumber(x.decimal_val*y.decimal_val)
@@ -68,9 +72,9 @@ def subquadratic_multiply(x, y):
         I then plug these values into the formula.
         the formula has three terms the first term needs to be shifted 2^n and the second term needs to be shifted 2^n/2
         '''
-        first_product = subquadratic_multiply(x_left, y_left)
-        second_product = subquadratic_multiply(x_right, y_right)
-        third_product = subquadratic_multiply(BinaryNumber(x_left.decimal_val + x_right.decimal_val), BinaryNumber(y_left.decimal_val + y_right.decimal_val))
+        first_product = _subquadratic_multiply(x_left, y_left)
+        second_product = _subquadratic_multiply(x_right, y_right)
+        third_product = _subquadratic_multiply(BinaryNumber(x_left.decimal_val + x_right.decimal_val), BinaryNumber(y_left.decimal_val + y_right.decimal_val))
         second_term = BinaryNumber(third_product.decimal_val - first_product.decimal_val - second_product.decimal_val)
 
         return BinaryNumber(bit_shift(first_product, len(xvec)).decimal_val + bit_shift(second_term, len(xvec)//2).decimal_val + second_product.decimal_val)
@@ -80,8 +84,20 @@ def subquadratic_multiply(x, y):
 def time_multiply(x, y, f):
     start = time.time()
     # multiply two numbers x, y using function f
+    f(x,y)
     return (time.time() - start)*1000
 
-    
+print(time_multiply(BinaryNumber(2),BinaryNumber(1),subquadratic_multiply))
+print(time_multiply(BinaryNumber(2),BinaryNumber(10),subquadratic_multiply))
+print(time_multiply(BinaryNumber(2),BinaryNumber(100),subquadratic_multiply))
+print(time_multiply(BinaryNumber(2),BinaryNumber(1000),subquadratic_multiply))
+print(time_multiply(BinaryNumber(2),BinaryNumber(10000),subquadratic_multiply))
+print(time_multiply(BinaryNumber(2),BinaryNumber(100000),subquadratic_multiply))
+
+
+
+
+
+
     
 
